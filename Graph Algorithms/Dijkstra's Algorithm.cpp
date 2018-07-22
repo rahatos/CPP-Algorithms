@@ -11,15 +11,15 @@ public:
     void addEdge(T u, T v, int dist)
     {
         m[u].push_back(make_pair(v, dist));
-        m[v].push_back(make_pair(u, dist));
-
+        //m[v].push_back(make_pair(u, dist));
         par[u] = u;
+        par[v] = u;
     }
 
     void dijkstraSPD(T startingNode)
     {
 
-        for(auto j:m)
+        for(auto j:par)
         {
             dist[j.first] = INT_MAX;
         }
@@ -76,12 +76,11 @@ public:
     void findPar(T p)
     {
         s.push(p);
-        p = par[p];
         if(p == par[p])
         {
-            s.push(p);
             return;
         }
+        p = par[p];
         findPar(p);
     }
 

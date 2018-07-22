@@ -2,7 +2,7 @@
 using namespace std;
 
 int nodes, edges;
-bool flag = true;
+bool printable = true;
 
 template <typename T>
 class Graph
@@ -45,28 +45,23 @@ public:
                 }
             }
         }
-
-        while(true)
+        for(auto j:m)
         {
-            for(auto j:m)
+            T node = j.first;
+            vector<pair<T, int> > k = j.second;
+            T dest = k[0].first;
+            int edgeDist = k[0].second;
+            int nodeDist = dist[node];
+            if(nodeDist + edgeDist < dist[dest])
             {
-                T node = j.first;
-                vector<pair<T, int> > k = j.second;
-                T dest = k[0].first;
-                int edgeDist = k[0].second;
-                int nodeDist = dist[node];
-                if(nodeDist + edgeDist < dist[dest])
-                {
-                    noSol = true;
-                }
+                noSol = true;
             }
-            break;
         }
 
         if(noSol)
         {
             cout << "\nDEADLOCK! NEGATIVE CYCLE IN GRAPH!!!" << endl;
-            flag = false;
+            printable = false;
         }
     }
     stack <T> s;
@@ -128,7 +123,7 @@ int main()
 
     Bangladesh.bellmanFordSPD(startingNode);
     //Bangladesh.printPath(destinationNode);
-    if(flag)
+    if(printable)
         Bangladesh.printallPaths();
 
     return 0;
